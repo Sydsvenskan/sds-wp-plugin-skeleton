@@ -2,14 +2,15 @@
 /**
  * Backend class
  *
- * usage:
- * \sds\skeleton\Backend::init()->get_stuff();
+ * usage in a template to display the name, using name template
+ * \sds\skeleton\Frontent::init()->get_name( 'name' );
  *
  */
 
 namespace sds\skeleton;
 
-class Backend  {
+
+class Frontent  {
 
 
 	private static $instance;
@@ -21,7 +22,7 @@ class Backend  {
 	public static function init() {
 
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new Frames;
+			self::$instance = new Frontent;
 		}
 
 		return self::$instance;
@@ -33,7 +34,7 @@ class Backend  {
 	 */
 	public function __construct() {
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
+		add_action( 'enqueue_scripts', array( $this, 'add_scripts' ) );
 
 	}
 
@@ -54,12 +55,48 @@ class Backend  {
 	}
 
 
+	/**
+	 * Get and display something
+	 */
+	public function get_name( $template_name ){
 
-	public function get_stuff(){
+		// set data
+		$vars['name'] = 'Mr Wordpress';
 
+		// display
+		echo $this->display( $template , $vars );
+
+	}
+
+
+	/**
+	 * Return the template
+	 */
+	public function get_template( $name ) {
+
+		return SDS_PATH . '/tpl/' . $name . '.php';
+
+	}
+
+
+	/**
+	 * Display the template
+	 */
+	protected function display( $template_name, $vars = array() ) {
+
+		extract( $vars );
+		ob_start();
+
+		$full_template_path = $this->get_template( $template_name );
+
+		if ( file_exists( $full_template_path ) ) {
+			include $full_template_path;
+		}
+
+		return ob_get_clean();
 	}
 
 
 }
 
-Backend::init();
+Frontent::init();

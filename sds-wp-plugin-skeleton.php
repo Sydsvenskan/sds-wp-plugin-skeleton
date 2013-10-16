@@ -17,5 +17,5 @@ define( 'SDS_URL', trailingslashit( plugins_url( '', __FILE__ ) ) );
 /**
  * Include required classes
  */
-require( 'inc/class-backend.php' );
+require( 'inc/class-frontend.php' );
 

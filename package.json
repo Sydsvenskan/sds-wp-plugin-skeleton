@@ -1,0 +1,7 @@
+{
+	"name": "Sydsvenskan/sds-wp-plugin-skeleton",
+	"type": "wordpress-plugin",
+	"require": {
+		"composer/installers": "*"
+	}
+}
